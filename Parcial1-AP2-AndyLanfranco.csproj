@@ -1,9 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <StartWorkingStartWorkingDirectory></StartWorkingDirectory>$()MSbUILDSBuildProjectDirectory$()MSbUILDSBuildProjectDirectory
-      MSbUILDSBuildProjectDirectory
-      
+    <StartWorkingDirectory>$(MSBuildProjectDirectory)</StartWorkingDirectory>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Parcial1_AP2_AndyLanfranco</RootNamespace>
   </PropertyGroup>
