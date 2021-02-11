@@ -1,5 +1,4 @@
-﻿<h3>Registro de Articulos</h3>
-
+﻿
 @page "/Articulo"
 @page "/Articulo/{ProductoId:int}"
 
@@ -9,7 +8,7 @@
     <DataAnnotationsValidator/>
     <div class="card">
         <div class="card-header">
-            <h3>Registrar Prestamos</h3>
+            <h3>Registrar Articulos</h3>
         </div>
 
         <div class="card-body">
@@ -51,8 +50,8 @@
 
                 @*Valor Inventario*@
                 <div class="form-group">
-                    <label>Costo</label>
-                    <InputNumber @bind-Value="Articulo.Valor_Inventario" class="form-control"/>
+                    <label>Valor de Inventario</label>
+                    <InputNumber @bind-Value="Articulo.Valor_Inventario" class="form-control" readonly/>
                     <ValidationMessage For="@(() => Articulo.Valor_Inventario)" />
                 </div>
             </form>
@@ -68,6 +67,8 @@
 
     </div>
 </EditForm>
+
+    
 
 @code {
 
