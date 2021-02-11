@@ -1,0 +1,138 @@
+﻿<h3>Registro de Articulos</h3>
+
+@page "/Articulo"
+@page "/Articulo/{ProductoId:int}"
+
+@inject IToastService toast
+
+<EditForm Model="Articulo" OnInvalidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+    <div class="card">
+        <div class="card-header">
+            <h3>Registrar Prestamos</h3>
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Articulo Id</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Articulo.ProductoId" class="form-control" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> Buscar </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Descripcion*@
+                <div class="form-group">
+                    <label>Descripcion</label>
+                    <InputText @bind-Value="Articulo.Descripcion" class="form-control" />
+                    <ValidationMessage For="@(() => Articulo.Descripcion)" />
+                </div>
+
+                @*Existencia*@
+                <div class="form-group">
+                    <label>Existencia</label>
+                    <InputNumber @bind-Value="Articulo.Existencia" class="form-control"/>
+                    <ValidationMessage For="@(() => Articulo.Existencia)" />
+                </div>
+
+                @*Costo*@
+                <div class="form-group">
+                    <label>Costo</label>
+                    <InputNumber @bind-Value="Articulo.Costo" class="form-control"/>
+                    <ValidationMessage For="@(() => Articulo.Costo)" />
+                </div>
+
+                @*Valor Inventario*@
+                <div class="form-group">
+                    <label>Costo</label>
+                    <InputNumber @bind-Value="Articulo.Valor_Inventario" class="form-control"/>
+                    <ValidationMessage For="@(() => Articulo.Valor_Inventario)" />
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <div class="form-group- text-center" display: inline-block>
+                <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="button" class="btn btn-success" @onclick="Guardar">Guardar</button>
+                <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
+
+@code {
+
+    [Inject]
+    private ArticulosBLL ArticulosBLL { get; set; }
+
+    [Parameter]
+    public int ProductoId { get; set; }
+
+    Articulos Articulo = new Articulos();
+
+    protected override void OnInitialized()
+    {
+        Limpiar();
+        Nuevo();
+    }
+
+    public async void Buscar()
+    {
+        var form = await ArticulosBLL.Buscar(Articulo.ProductoId);
+
+        if(form != null)
+        {
+            this.Articulo = form;
+        }
+        else
+        {
+            toast.ShowInfo("No se pudo encontrar el registro");
+        }
+    }
+
+    public void Limpiar()
+    {
+        this.Articulo = new Articulos();
+    }
+
+    public void Nuevo()
+    {
+        Limpiar();
+    }
+
+    public async void Guardar()
+    {
+        if(await ArticulosBLL.Guardar(Articulo))
+        {
+            toast.ShowSuccess("Registro Guardado");
+            Limpiar();
+        }
+        else
+        {
+            toast.ShowError("No se pudo guardar el registro");
+        }
+    }
+
+    public async void Eliminar()
+    {
+        if (await ArticulosBLL.Eliminar(Articulo.ProductoId))
+        {
+            toast.ShowSuccess("Se ha Eliminado el Registro");
+            Limpiar();
+        }
+        else
+        {
+            toast.ShowError("No se pudo Eliminar el Registro");
+        }
+    }
+
+}

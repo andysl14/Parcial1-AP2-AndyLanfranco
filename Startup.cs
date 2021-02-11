@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.Toast;
 
 namespace Parcial1_AP2_AndyLanfranco
 {
@@ -31,6 +32,7 @@ namespace Parcial1_AP2_AndyLanfranco
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddBlazoredToast();
             services.AddSingleton<WeatherForecastService>();
             services.AddDbContext<Contexto>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
